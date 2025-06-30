@@ -31,6 +31,12 @@ jobs:
           uses: actions/setup-node@v3
           with:
             node-version: ${{matrix.version}}
+
+        - name: Cache NPM dependencies
+          uses: actions/cache@v4
+          with:
+            path: node_modules 
+            key: ${{runner.os}}-node-modules-${{hashfiles('package-lock.json')}}   
     
         - name: Install Dependencies
           run: npm install
@@ -41,8 +47,42 @@ jobs:
         - name: Archive Test Result
           uses: actions/upload-artifact@v4
           with:
-            name: Test-Result
+            name: test-report-${{ github.run_id }}-${{ github.job }}
             path: test-result.xml
 
-  
+
+
+    code-coverage:
+         name: Code coverage
+         runs-on: ubuntu-latest
+         steps:
+         - name: Checkout Repository
+           uses: actions/checkout@v4
+
+         - name: Setup NodeJS Version 20
+           uses: actions/setup-node@v3
+           with:
+              node-version: 20
+
+
+         - name: Cache NPM dependencies
+           uses: actions/cache@v4
+           with:
+            path: node_modules 
+            key: ${{runner.os}}-node-modules-${{hashfiles('package-lock.json')}}
+    
+         - name: Install Dependencies
+           run: npm install
+    
+         - name: check code coverage
+           continue-on-error: true
+           run: npm run coverage
+          
+         - name: Archive Test Result
+           uses: actions/upload-artifact@v4
+           with:
+            name: code-coverage-Result
+            path: coverage
+            retention-days: 5
+ 
               
