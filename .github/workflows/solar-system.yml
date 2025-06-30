@@ -1,7 +1,6 @@
 name: Solar-System
 
-on: 
-  push:
+on: push
    
 
 env:
