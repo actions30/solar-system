@@ -1,11 +1,8 @@
-name: Unit Testing(Cache,code coverage)
+name: Solar-System
 
 on: 
-  workflow_dispatch:
   push:
-    branches:
-      - main
-      - 'feature/*'
+   
 
 env:
     MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
