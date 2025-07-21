@@ -163,4 +163,13 @@ jobs:
               tags: |
                     ${{ vars.DOCKER_USERNAME}}/solar-system:${{github.sha}}  
                     ghcr.io/${{github.repository_owner}}/solar-system:${{ github.sha }}
-              
+
+    DEPLOY:
+        name: Deployment 
+        needs: [unit-testing,code-coverage,docker]
+       
+
+        runs-on: ubuntu-latest
+        steps:
+          - name: Deployment
+            run: echo " Succefully Deployed"
